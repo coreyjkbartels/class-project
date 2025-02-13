@@ -1,0 +1,64 @@
+length()
+Check for value of head. If it's null return 0
+If head contains a node, initialize a counter to 0 and a node named current to the head
+Write a while loop that continues until the current is null
+For every iteration of the loop, increment the counter and set current to its next value
+Return the value of the counter
+
+insertFirst(int value)
+Create a new node with the parameter given and name it newNode
+Set the value of next for newNode to the value of the head of the list
+Set the head of the list to newNode
+
+insert(int position, int value)
+Create a new node with the value parameter and name it node
+If the position parameter is 1, set node.next to head and set head to node
+Else
+    Create a new node named previous and set it to the head of the list
+    initialize a counter to 1
+    Loop until the counter is less than (position - 1)
+        For every iteration of the loop, set previous to its next value
+        increment the counter
+
+    Create a new node named current and set it to previous.next
+    Set previous.next to node and set node.next to current
+
+
+insertLast(int value)
+Create a new node with the value given and name it newNode
+If head of the list is null, set head to newNode and return from the method
+Create a new node, current and initialize it to head
+Loop while current.next is not null
+    Set current to current.next
+set current.next to newNode
+
+deleteFirst()
+if head is null, return null
+Create a node, temp and initialize it to head
+Set head to head.next and temp.next to null
+return temp
+
+delete(int position)
+If position is 1, set head to head.next
+Else
+    Create a node, previous, and set it to head
+    Initialize a counter to 1
+    loop while counter is less than (position - 1)
+    for every iteration
+        set previous to previous.next
+        increment counter
+    Create a node, current , and set it to previous.next
+    Set previous.next to current.next
+
+deleteLast()
+If head is null, return head
+If head.next is null, set a new node, temp, to head
+    Set head to null
+    return temp
+Set a new node, current, to head
+Set a new node, previous, to null
+Loop while current.next is not null
+    for every iteration, set previous to current
+    set current to current.next
+Set previous.next to null
+Return current
