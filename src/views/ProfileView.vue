@@ -2,9 +2,9 @@
 import { RouterLink } from "vue-router";
 import { ref, useTemplateRef } from "vue";
 import ModalComponent from "@/components/ModalComponent.vue";
-import ToastComponent from "@/components/ToastComponent.vue";
 
 const modal = useTemplateRef("modal");
+const showToast = ref(false);
 const message = ref("");
 
 const userName = ref("");
@@ -57,8 +57,14 @@ async function save() {
     message.value = "Success";
     getInfo();
     localStorage.setItem("userName", userName.value);
-  } else console.log(response.status);
+  } else {
+    console.log(response.status);
+    message.value = "Failed";
+  }
+
   modal.value.close();
+  showToast.value = true;
+  setTimeout(() => (showToast.value = false), 2000);
 }
 
 function cancel(e) {
@@ -113,7 +119,7 @@ async function getResponse(endpoint, methodParam, data) {
     </div>
   </main>
 
-  <ToastComponent :message></ToastComponent>
+  <span v-show="showToast" class="toast">{{ message }}</span>
 
   <ModalComponent ref="modal">
     <template #header>
@@ -230,5 +236,19 @@ h1 {
 
 button {
   width: 100px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: fit-content;
+  margin: auto;
+
+  padding: 0.25em 1.5em;
+  background-color: hsl(0 0% 95%);
+  border-radius: 7px;
 }
 </style>
