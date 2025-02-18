@@ -7,6 +7,8 @@ import { ref } from "vue";
 
 const error = ref("");
 const isShown = ref(false);
+const userName = ref(localStorage.getItem("userName"));
+console.log(localStorage.getItem("userName"));
 
 async function signOut() {
   const response = await getResponse("user/logout", "POST");
@@ -55,13 +57,15 @@ function displayProfile() {
 <template>
   <HeaderComponent>
     <nav>
-      <a @click="signOut">Log Out</a>
+      <h3>Welcome {{ userName }}</h3>
+
       <div class="dropdown">
         <a class="dropdownBtn"
           ><span class="material-symbols-outlined"> menu </span></a
         >
         <div class="links">
           <a class="dropdownLink" @click="displayProfile">Profile</a>
+          <a class="dropdownLink" @click="signOut">Log Out</a>
           <a class="dropdownLink" @click="deleteAccount">Delete</a>
         </div>
       </div>
@@ -157,5 +161,9 @@ function displayProfile() {
 nav {
   display: flex;
   align-items: center;
+}
+
+nav h3 {
+  font-size: 1.3rem;
 }
 </style>
