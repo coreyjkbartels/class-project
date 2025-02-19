@@ -8,7 +8,7 @@
 
 <style scoped>
 .card-background {
-  width: 350px;
+  width: fit-content;
   margin: 15px auto;
 
   padding: 0px 25px;

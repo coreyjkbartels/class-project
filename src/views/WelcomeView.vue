@@ -1,8 +1,9 @@
 <script setup>
-import CardComponent from "@/components/CardComponent.vue";
+import ModalComponent from "@/components/ModalComponent.vue";
 import MessageComponent from "@/components/MessageComponent.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, useTemplateRef } from "vue";
 
+const modal = useTemplateRef("modal");
 const text = ref("");
 const showToast = ref(false);
 const toastMessage = ref("");
@@ -58,8 +59,14 @@ async function postMessage() {
     toastMessage.value = "Message Posted";
   } else toastMessage.value = "Failed to Post Message";
 
+  modal.value.close();
   showToast.value = true;
   setTimeout(() => (showToast.value = false), 2000);
+}
+
+function cancel(e) {
+  text.value = "";
+  modal.value.close(e);
 }
 
 async function getNewMessageCount() {
@@ -110,14 +117,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <CardComponent>
-    <form onsubmit="return false">
-      <label for="text">Message</label>
-      <input type="text" id="text" v-model="text" required maxlength="280" />
-      <span class="material-symbols-outlined" @click="postMessage"> send </span>
-    </form>
-  </CardComponent>
-
   <div class="wrapper">
     <div class="messages">
       <div
@@ -140,6 +139,35 @@ onMounted(() => {
   </div>
 
   <div v-show="showToast" class="toast">{{ toastMessage }}</div>
+
+  <button class="postMessage" @click="modal.open">Post Message</button>
+
+  <ModalComponent ref="modal">
+    <template #header>
+      <h2>Post Message</h2>
+    </template>
+    <template #main>
+      <form onsubmit="return false">
+        <textarea
+          name="textarea"
+          id="text"
+          v-model="text"
+          required
+          maxlength="280"
+          :style="{
+            width: '500px',
+            height: '250px',
+          }"
+        ></textarea>
+      </form>
+    </template>
+    <template #footer>
+      <div class="buttons">
+        <button class="cancel" @click="cancel">Cancel</button>
+        <button class="save" @click="postMessage">Post</button>
+      </div>
+    </template>
+  </ModalComponent>
 </template>
 
 <style scoped>
@@ -174,10 +202,9 @@ form {
 }
 
 .messages {
-  height: 330px;
+  height: 400px;
   border-radius: 10px;
   overflow-y: auto;
-  /* scrollbar-color: o white; */
   scroll-padding: 10px;
 }
 
@@ -197,5 +224,27 @@ form {
 .newMessageCount.disabled:hover {
   background-color: hsl(0 0% 90%);
   color: black;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+.postMessage {
+  display: block;
+  width: fit-content;
+  margin: 0px auto;
+  margin-top: 30px;
+}
+
+textarea {
+  padding: 20px;
+  border-radius: 10px;
+  resize: none;
 }
 </style>

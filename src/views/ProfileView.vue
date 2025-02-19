@@ -121,73 +121,80 @@ async function getResponse(endpoint, methodParam, data) {
 
   <span v-show="showToast" class="toast">{{ message }}</span>
 
-  <ModalComponent ref="modal">
-    <template #header>
-      <h2>Edit</h2>
-    </template>
-    <template #main>
-      <form class="mainForm" onsubmit="return false">
-        <li class="inputGroup">
-          <label for="firstName">First Name</label>
-          <input
-            type="text"
-            name="firstName"
-            id="firstName"
-            v-model="newFirstName"
-            required
-          />
-        </li>
-        <li class="inputGroup">
-          <label for="lastName">Last Name</label>
-          <input
-            type="text"
-            name="lastName"
-            id="lastName"
-            v-model="newLastName"
-            required
-          />
-        </li>
-        <li class="inputGroup">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            v-model="newEmail"
-            required
-          />
-        </li>
-        <li class="inputGroup">
-          <label for="userName">Username</label>
-          <input
-            type="text"
-            name="userName"
-            id="userName"
-            v-model="newUserName"
-            required
-          />
-        </li>
-        <li class="inputGroup">
-          <label for="password">Password</label
-          ><input
-            type="password"
-            name="password"
-            id="password"
-            v-model="password"
-            minlength="8"
-            required
-          />
-        </li>
-      </form>
-    </template>
-
-    <template #footer>
-      <div class="buttons">
-        <button class="cancel" @click="cancel">Cancel</button>
-        <button class="save" @click="save">Save</button>
-      </div>
-    </template>
-  </ModalComponent>
+  <div class="wrapper">
+    <ModalComponent ref="modal">
+      <template #header>
+        <h2>Edit</h2>
+      </template>
+      <template #main>
+        <form
+          class="mainForm"
+          onsubmit="return false"
+          :style="{
+            width: '300px',
+          }"
+        >
+          <li class="inputGroup">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              name="firstName"
+              id="firstName"
+              v-model="newFirstName"
+              required
+            />
+          </li>
+          <li class="inputGroup">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              v-model="newLastName"
+              required
+            />
+          </li>
+          <li class="inputGroup">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              v-model="newEmail"
+              required
+            />
+          </li>
+          <li class="inputGroup">
+            <label for="userName">Username</label>
+            <input
+              type="text"
+              name="userName"
+              id="userName"
+              v-model="newUserName"
+              required
+            />
+          </li>
+          <li class="inputGroup">
+            <label for="password">Password</label
+            ><input
+              type="password"
+              name="password"
+              id="password"
+              v-model="password"
+              minlength="8"
+              required
+            />
+          </li>
+        </form>
+      </template>
+      <template #footer>
+        <div class="buttons">
+          <button class="cancel" @click="cancel">Cancel</button>
+          <button class="save" @click="save">Save</button>
+        </div>
+      </template>
+    </ModalComponent>
+  </div>
 </template>
 
 <style scoped>
