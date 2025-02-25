@@ -1,20 +1,20 @@
 <script setup>
 defineProps({
-  senderName: String,
-  updatedAt: String,
-  text: String,
+  firstName: String,
+  lastName: String,
+  userName: String,
+  unique_id: String,
 });
 </script>
 
 <template>
   <div class="wrapper">
-    <div class="messageCard">
+    <div class="userCard">
       <div class="metadata">
-        <span>{{ senderName }}</span>
-        <span>{{ updatedAt }}</span>
+        <span>{{ userName }}</span>
       </div>
       <div class="data">
-        <span>{{ text }}</span>
+        <span>{{ `${firstName} ${lastName}` }}</span>
       </div>
     </div>
   </div>
@@ -22,22 +22,21 @@ defineProps({
 
 <style scoped>
 .wrapper {
-  margin: 15px auto;
-  width: 80%;
+  /* margin: 15px auto; */
+  width: 100%;
 
-  border: 1px solid black;
+  border: 1.75px solid black;
   border-radius: 10px;
   overflow: hidden;
 }
 
-.messageCard {
+.userCard {
   background-color: hsl(0 0% 97%);
   border-radius: 10px;
   overflow-y: auto;
 
   margin: 0px auto;
-  width: 100%;
-  height: 150px;
+  /* height: 175px; */
 
   position: relative;
 }

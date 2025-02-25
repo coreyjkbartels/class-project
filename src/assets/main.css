@@ -14,6 +14,7 @@
 
 :root {
   --accent: #ff3b38;
+  --darkGray: rgba(0, 0, 0, 0.54);
 }
 
 * {
@@ -45,7 +46,7 @@ li.inputGroup {
 }
 
 button {
-  border: 0.7px solid rgba(0, 0, 0, 0.54);
+  border: 0.7px solid var(--darkGray);
   background-color: var(--accent);
   border-radius: 5px;
 
@@ -63,7 +64,7 @@ a {
   font-size: 1.3rem;
   font-weight: bold;
   text-decoration: none;
-  color: rgba(0, 0, 0, 0.54);
+  color: var(--darkGray);
 
   padding: 5px;
   cursor: pointer;
@@ -78,15 +79,15 @@ a:hover {
   position: relative;
   top: calc(0.025 * 48px);
   font-variation-settings: "FILL" 0, "wght" 600, "GRAD" 0, "opsz" 48;
-  color: rgba(0, 0, 0, 0.54);
+  color: var(--darkGray);
   cursor: pointer;
 
-  border-radius: 50%;
+  /* border-radius: 50%; */
 }
 
 .material-symbols-outlined:hover,
 .dropdown:hover .material-symbols-outlined {
-  color: #ff3b38;
+  color: var(--accent);
 }
 
 h3 {
@@ -102,5 +103,23 @@ input {
 }
 
 .errorBox {
-  color: red;
+  color: var(--accent);
+}
+
+.paneTitle {
+  padding: 10px;
+}
+
+.scrollIcon {
+  color: var(--accent);
+  background-color: gray;
+  border-radius: 50%;
+
+  /* font-size: 1.rem; */
+  text-align: center;
+
+  position: sticky;
+  bottom: 2%;
+  left: 50%;
+  transform: translateX(-50%);
 }

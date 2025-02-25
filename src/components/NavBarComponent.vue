@@ -4,7 +4,7 @@ import { RouterLink } from "vue-router";
 
 <template>
   <div class="bar">
-    <div class="title">Navigation</div>
+    <div class="paneTitle">Navigation</div>
     <RouterLink to="main">Home</RouterLink>
     <RouterLink to="profile">Profile</RouterLink>
   </div>
@@ -14,10 +14,6 @@ import { RouterLink } from "vue-router";
 .bar {
   display: flex;
   flex-direction: column;
-}
-
-.title {
-  padding: 10px;
 }
 
 a {

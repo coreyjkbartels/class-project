@@ -8,7 +8,6 @@ import { ref } from "vue";
 const error = ref("");
 const isShown = ref(false);
 const userName = ref(localStorage.getItem("userName"));
-console.log(localStorage.getItem("userName"));
 
 async function signOut() {
   const response = await getResponse("user/logout", "POST");

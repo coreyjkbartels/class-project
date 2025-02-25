@@ -11,6 +11,12 @@ const messages = ref([]);
 const newMessageCount = ref(0);
 const isDisabled = ref(true);
 
+const formatDate = (dateString) => {
+  return new Date(dateString).toLocaleString("en-US", {
+    timeZone: "America/New_York",
+  });
+};
+
 async function getMessages(extraParam = "", prepend = false) {
   const url = `https://hap-app-api.azurewebsites.net/messages?limit=15${extraParam}`;
   const options = {
@@ -24,11 +30,9 @@ async function getMessages(extraParam = "", prepend = false) {
   const response = await fetch(url, options);
   if (response.status == 200) {
     const data = await response.json();
-    console.log(data);
     prepend ? messages.value.unshift(...data) : messages.value.push(...data);
-    console.log("Success");
   } else {
-    console.log("Failed");
+    console.log("Failed to fetch messages");
   }
 }
 
@@ -82,12 +86,10 @@ async function getNewMessageCount() {
   const response = await fetch(url, options);
   if (response.status == 200) {
     const data = await response.json();
-    console.log(data);
-    console.log("Success");
     newMessageCount.value = data.total;
     isDisabled.value = newMessageCount.value === 0;
   } else {
-    console.log("Failed");
+    console.log("Failed to get new message count");
   }
 }
 
@@ -106,10 +108,7 @@ onMounted(() => {
       getMessages(
         `&before=${messages.value[messages.value.length - 1].updatedAt}`
       );
-      console.log();
-      console.log("Reached the end");
     } else if (messagesElm.scrollTop === 0) {
-      console.log("Reached top");
       getNewMessageCount();
     }
   });
@@ -117,7 +116,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="paneTitle">Message Feed</div>
+  <div class="messageWrapper">
     <div class="messages">
       <div
         class="newMessageCount"
@@ -133,8 +133,10 @@ onMounted(() => {
       <MessageComponent
         v-for="message in messages"
         v-bind="message"
+        :updated-at="formatDate(message.updatedAt)"
         :key="message.id"
       ></MessageComponent>
+      <div class="material-symbols-outlined scrollIcon">arrow_drop_down</div>
     </div>
   </div>
 
@@ -195,17 +197,23 @@ form {
   border-radius: 7px;
 }
 
-.wrapper {
+.messageWrapper {
   border-radius: 10px;
   border: 1px solid black;
   overflow: hidden;
+
+  width: 80%;
+  margin: auto;
 }
 
 .messages {
-  height: 400px;
+  height: 360px;
   border-radius: 10px;
   overflow-y: auto;
-  scroll-padding: 10px;
+}
+
+.messages::-webkit-scrollbar {
+  display: none;
 }
 
 .newMessageCount {
@@ -239,7 +247,7 @@ h2 {
   display: block;
   width: fit-content;
   margin: 0px auto;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 textarea {
