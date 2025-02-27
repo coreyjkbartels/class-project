@@ -49,7 +49,7 @@ async function searchUsers() {
           v-bind="user"
           :key="user.id"
         ></UserComponent>
-        <div class="material-symbols-outlined scrollIcon">arrow_drop_down</div>
+        <!-- <div class="material-symbols-outlined scrollIcon">arrow_drop_down</div> -->
       </div>
     </div>
   </div>
@@ -65,7 +65,7 @@ form.search {
 
 .wrapper {
   margin-top: 20px;
-  border: 1px black solid;
+  /* border: 1px black solid; */
   border-radius: 7px;
   overflow: hidden;
   width: 80%;

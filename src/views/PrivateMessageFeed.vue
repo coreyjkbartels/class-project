@@ -3,6 +3,10 @@ import ModalComponent from "@/components/ModalComponent.vue";
 import MessageComponent from "@/components/MessageComponent.vue";
 import { onMounted, ref, useTemplateRef } from "vue";
 
+const props = defineProps({
+  userId: String,
+});
+
 const modal = useTemplateRef("modal");
 const text = ref("");
 const showToast = ref(false);
@@ -17,8 +21,8 @@ const formatDate = (dateString) => {
   });
 };
 
-async function getMessages(extraParam = "", prepend = false) {
-  const url = `https://hap-app-api.azurewebsites.net/messages?limit=15${extraParam}`;
+async function getMessages(queryParams, prepend = false) {
+  const url = `https://hap-app-api.azurewebsites.net/messages/${props.userId}?${queryParams}`;
   const options = {
     method: "GET",
     headers: {
@@ -29,6 +33,7 @@ async function getMessages(extraParam = "", prepend = false) {
 
   const response = await fetch(url, options);
   if (response.status == 200) {
+    console.log("Succeeded in fetching messages");
     const data = await response.json();
     prepend ? messages.value.unshift(...data) : messages.value.push(...data);
   } else {
@@ -42,7 +47,7 @@ async function postMessage() {
   const form = document.querySelector("form");
   if (!form.reportValidity) return false;
 
-  const url = "https://hap-app-api.azurewebsites.net/message";
+  const url = `https://hap-app-api.azurewebsites.net/message/${props.userId}`;
   const data = {
     text: text.value,
   };
@@ -73,8 +78,8 @@ function cancel(e) {
   modal.value.close(e);
 }
 
-async function getNewMessageCount() {
-  const url = `https://hap-app-api.azurewebsites.net/messages/count?after=${messages.value[0].updatedAt}`;
+async function getMessageCount() {
+  const url = `https://hap-app-api.azurewebsites.net/messages/${props.userId}/count?after=${messages.value[0].updatedAt}`;
   const options = {
     method: "GET",
     headers: {
@@ -85,9 +90,11 @@ async function getNewMessageCount() {
 
   const response = await fetch(url, options);
   if (response.status == 200) {
+    console.log("Succeed in getting new message count");
     const data = await response.json();
-    newMessageCount.value = data.total;
-    isDisabled.value = newMessageCount.value === 0;
+    let messageCount = data.total;
+    isDisabled.value = messageCount === 0;
+    return messageCount;
   } else {
     console.log("Failed to get new message count");
   }
@@ -95,12 +102,12 @@ async function getNewMessageCount() {
 
 async function updateWithNew() {
   await getMessages(`&after=${messages.value[0].updatedAt}`, true);
-  await getNewMessageCount();
+  newMessageCount.value = await getMessageCount();
 }
 
 onMounted(() => {
   const messagesElm = document.querySelector(".messages");
-  messagesElm.addEventListener("scroll", () => {
+  messagesElm.addEventListener("scroll", async () => {
     if (
       Math.ceil(messagesElm.scrollTop) >=
       messagesElm.scrollHeight - messagesElm.offsetHeight
@@ -109,7 +116,7 @@ onMounted(() => {
         `&before=${messages.value[messages.value.length - 1].updatedAt}`
       );
     } else if (messagesElm.scrollTop === 0) {
-      getNewMessageCount();
+      newMessageCount.value = await getMessageCount();
     }
   });
 });

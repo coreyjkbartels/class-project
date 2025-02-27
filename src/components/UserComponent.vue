@@ -3,12 +3,12 @@ defineProps({
   firstName: String,
   lastName: String,
   userName: String,
-  unique_id: String,
+  _id: String,
 });
 </script>
 
 <template>
-  <div class="wrapper">
+  <RouterLink :to="`/user/${_id}?name=${userName}`">
     <div class="userCard">
       <div class="metadata">
         <span>{{ userName }}</span>
@@ -17,15 +17,13 @@ defineProps({
         <span>{{ `${firstName} ${lastName}` }}</span>
       </div>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <style scoped>
 .wrapper {
-  /* margin: 15px auto; */
   width: 100%;
 
-  border: 1.75px solid black;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -36,9 +34,17 @@ defineProps({
   overflow-y: auto;
 
   margin: 0px auto;
-  /* height: 175px; */
 
   position: relative;
+}
+
+.userCard:hover {
+  border: 1px ;
+}
+
+a:hover {
+  color: var(--darkGray);
+  text-decoration: none;
 }
 
 .metadata {
