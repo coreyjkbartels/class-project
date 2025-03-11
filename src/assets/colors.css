@@ -1,0 +1,6 @@
+:root {
+	--accent: #ff3b38;
+	--darkGray: rgba(0, 0, 0, 0.54);
+	--lightGray: hsl(0 0% 90%);
+	--fontColor: rgba(0, 0, 0, 0.8);
+}

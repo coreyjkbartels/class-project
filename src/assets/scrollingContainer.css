@@ -1,0 +1,34 @@
+.scrollWrapper {
+	border-radius: 10px;
+	border: 1px solid black;
+	overflow: hidden;
+
+	width: 80%;
+	margin: auto;
+}
+
+.scrollContent {
+	overflow-y: auto;
+}
+
+.scrollContent::-webkit-scrollbar {
+	display: none;
+}
+
+.topMessage {
+	background-color: var(--lightGray);
+	text-align: center;
+
+	cursor: pointer;
+	padding: 5px;
+}
+
+.topMessage:hover {
+	background-color: var(--accent);
+	color: white;
+}
+
+.topMessage.disabled:hover {
+	background-color: var(--lightGray);
+	color: var(--fontColor);
+}

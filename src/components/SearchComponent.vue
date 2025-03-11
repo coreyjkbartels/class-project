@@ -44,14 +44,14 @@ async function searchUsers() {
       </span>
     </form>
 
-    <div class="wrapper">
-      <div class="users">
+    <div class="scrollWrapper">
+      <div class="topMessage">Showing {{ users.length }} user(s)</div>
+      <div class="users scrollContent">
         <UserComponent
           v-for="user in users"
           v-bind="user"
           :key="user.id"
         ></UserComponent>
-        <!-- <div class="material-symbols-outlined scrollIcon">arrow_drop_down</div> -->
       </div>
     </div>
   </div>
@@ -65,18 +65,8 @@ form.search {
   flex-direction: row;
 }
 
-.wrapper {
-  margin-top: 20px;
-  /* border: 1px black solid; */
-  border-radius: 7px;
-  overflow: hidden;
-  width: 80%;
-  padding: 10px;
-  /* margin: 20px auto; */
-}
-
 .users {
-  height: 300px;
-  overflow: auto;
+  max-height: 300px;
+  padding: 0px 10px;
 }
 </style>

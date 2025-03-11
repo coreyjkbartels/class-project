@@ -119,10 +119,10 @@ onMounted(() => {
 
 <template>
   <div class="paneTitle">Message Feed</div>
-  <div class="messageWrapper">
-    <div class="messages">
+  <div class="scrollWrapper">
+    <div class="messages scrollContent">
       <div
-        class="newMessageCount"
+        class="topMessage"
         :class="{ disabled: isDisabled }"
         @click="updateWithNew"
       >
@@ -138,7 +138,6 @@ onMounted(() => {
         :updated-at="formatDate(message.updatedAt)"
         :key="message.id"
       ></MessageComponent>
-      <!-- <div class="material-symbols-outlined scrollIcon">arrow_drop_down</div> -->
     </div>
   </div>
 
@@ -199,41 +198,8 @@ form {
   border-radius: 7px;
 }
 
-.messageWrapper {
-  border-radius: 10px;
-  border: 1px solid black;
-  overflow: hidden;
-
-  width: 80%;
-  margin: auto;
-}
-
 .messages {
   height: 360px;
-  border-radius: 10px;
-  overflow-y: auto;
-}
-
-.messages::-webkit-scrollbar {
-  display: none;
-}
-
-.newMessageCount {
-  background-color: hsl(0 0% 90%);
-  text-align: center;
-
-  cursor: pointer;
-  padding: 5px;
-}
-
-.newMessageCount:hover {
-  background-color: var(--accent);
-  color: white;
-}
-
-.newMessageCount.disabled:hover {
-  background-color: hsl(0 0% 90%);
-  color: black;
 }
 
 .buttons {
