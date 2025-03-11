@@ -15,16 +15,25 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+      meta: {
+        requiresAuth: false,
+      },
     },
     {
       path: "/join",
       name: "join",
       component: JoinView,
+      meta: {
+        requiresAuth: false,
+      },
     },
     {
       path: "/signin",
       name: "signin",
       component: SignInView,
+      meta: {
+        requiresAuth: false,
+      },
     },
     {
       path: "/main",
@@ -47,6 +56,7 @@ const router = createRouter({
         },
         {
           path: "/user/:userId",
+          name: "privateMessage",
           components: {
             default: PrivateMessageFeed,
             right: SearchComponent,
@@ -54,8 +64,21 @@ const router = createRouter({
           props: true,
         },
       ],
+      meta: {
+        requiresAuth: true,
+      },
     },
   ],
+});
+
+router.beforeEach((to, from) => {
+  if (!router.hasRoute(to.name)) {
+    return { name: "home" };
+  }
+
+  if (to.meta.requiresAuth && !localStorage.getItem("token")) {
+    return { name: "home" };
+  }
 });
 
 export default router;
