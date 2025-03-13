@@ -118,28 +118,32 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="paneTitle">Message Feed</div>
-  <div class="scrollWrapper">
-    <div class="messages scrollContent">
-      <div
-        class="topMessage"
-        :class="{ disabled: isDisabled }"
-        @click="updateWithNew"
-      >
-        {{
-          newMessageCount == 0
-            ? "No New Messages"
-            : newMessageCount + " new messages"
-        }}
+  <section>
+    <div class="container">
+      <div class="paneTitle">Message Feed</div>
+      <div class="scrollWrapper">
+        <div class="messages scrollContent">
+          <div
+            class="topMessage"
+            :class="{ disabled: isDisabled }"
+            @click="updateWithNew"
+          >
+            {{
+              newMessageCount == 0
+                ? "No New Messages"
+                : newMessageCount + " new messages"
+            }}
+          </div>
+          <MessageComponent
+            v-for="message in messages"
+            v-bind="message"
+            :updated-at="formatDate(message.updatedAt)"
+            :key="message.id"
+          ></MessageComponent>
+        </div>
       </div>
-      <MessageComponent
-        v-for="message in messages"
-        v-bind="message"
-        :updated-at="formatDate(message.updatedAt)"
-        :key="message.id"
-      ></MessageComponent>
     </div>
-  </div>
+  </section>
 
   <div v-show="showToast" class="toast">{{ toastMessage }}</div>
 

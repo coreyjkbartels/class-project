@@ -105,3 +105,8 @@ input {
 .paneTitle {
 	padding: 10px;
 }
+
+section > .container {
+	display: flex;
+	flex-direction: column;
+}

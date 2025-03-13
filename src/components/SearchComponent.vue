@@ -29,32 +29,33 @@ async function searchUsers() {
 </script>
 
 <template>
-  <div class="main">
-    <div class="paneTitle">Search</div>
-    <form onsubmit="return false" class="search">
-      <input
-        type="text"
-        name="search"
-        id="search"
-        v-model="searchText"
-        required
-      />
-      <span class="material-symbols-outlined" @click="searchUsers">
-        search
-      </span>
-    </form>
-
-    <div class="scrollWrapper">
-      <div class="topMessage">Showing {{ users.length }} user(s)</div>
-      <div class="users scrollContent">
-        <UserComponent
-          v-for="user in users"
-          v-bind="user"
-          :key="user.id"
-        ></UserComponent>
+  <section>
+    <div class="container">
+      <div class="paneTitle">Search Users</div>
+      <form onsubmit="return false" class="search">
+        <input
+          type="text"
+          name="search"
+          id="search"
+          v-model="searchText"
+          required
+        />
+        <span class="material-symbols-outlined" @click="searchUsers">
+          search
+        </span>
+      </form>
+      <div class="scrollWrapper">
+        <div class="topMessage">Showing {{ users.length }} user(s)</div>
+        <div class="users scrollContent">
+          <UserComponent
+            v-for="user in users"
+            v-bind="user"
+            :key="user.id"
+          ></UserComponent>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style scoped>
@@ -68,5 +69,9 @@ form.search {
 .users {
   max-height: 300px;
   padding: 0px 10px;
+}
+
+section > .container {
+  max-height: 424.8px;
 }
 </style>
