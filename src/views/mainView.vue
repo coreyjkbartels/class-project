@@ -2,18 +2,21 @@
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import NavBarComponent from "@/components/NavBarComponent.vue";
 import { RouterView } from "vue-router";
+import { useUserStore } from "@/stores/user";
 import router from "@/router";
 import { ref } from "vue";
+import { storeToRefs } from "pinia";
 
 const error = ref("");
 const isShown = ref(false);
-const userName = ref(localStorage.getItem("userName"));
+const userStore = useUserStore();
+const { userName } = storeToRefs(userStore);
 
 async function signOut() {
   const response = await getResponse("user/logout", "POST");
 
   if (response.status === 200) {
-    localStorage.clear();
+    userStore.$reset();
     router.push({ name: "home" });
   } else {
     error.value = "An error occurred while logging out.";
@@ -26,7 +29,7 @@ async function deleteAccount() {
   const response = await getResponse("user", "DELETE");
 
   if (response.status === 200) {
-    localStorage.clear();
+    userStore.$reset();
     router.push({ name: "home" });
   } else {
     error.value = "Could not delete your account";
@@ -41,7 +44,7 @@ async function getResponse(endpoint, methodParam) {
     method: methodParam,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${userStore.token}`,
     },
   };
 

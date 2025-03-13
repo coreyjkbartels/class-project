@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useUserStore } from "@/stores/user";
 import HomeView from "@/views/HomeView.vue";
 import JoinView from "@/views/joinView.vue";
 import SignInView from "@/views/signInView.vue";
@@ -76,7 +77,9 @@ router.beforeEach((to, from) => {
     return { name: "home" };
   }
 
-  if (to.meta.requiresAuth && !localStorage.getItem("token")) {
+  const userStore = useUserStore();
+  if (to.meta.requiresAuth && !userStore.token) {
+    console.log("NavGuard triggered; Redirecting...");
     return { name: "home" };
   }
 });

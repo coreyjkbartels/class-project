@@ -1,8 +1,10 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import { ref, useTemplateRef } from "vue";
+import { useUserStore } from "@/stores/user";
 import ModalComponent from "@/components/ModalComponent.vue";
 
+const userStore = useUserStore();
 const modal = useTemplateRef("modal");
 const showToast = ref(false);
 const message = ref("");
@@ -56,7 +58,11 @@ async function save() {
     console.log("Success");
     message.value = "Success";
     getInfo();
-    localStorage.setItem("userName", userName.value);
+    userStore.$patch((state) => {
+      state.userName = userName.value;
+    });
+    // userStore.setUser(userName.value, userStore.token);
+    // localStorage.setItem("userName", userName.value);
   } else {
     console.log(response.status);
     message.value = "Failed";
@@ -81,7 +87,7 @@ async function getResponse(endpoint, methodParam, data) {
     method: methodParam,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${userStore.token}`,
     },
     body: JSON.stringify(data),
   };

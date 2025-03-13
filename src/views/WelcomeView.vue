@@ -2,7 +2,9 @@
 import ModalComponent from "@/components/ModalComponent.vue";
 import MessageComponent from "@/components/MessageComponent.vue";
 import { onMounted, ref, useTemplateRef } from "vue";
+import { useUserStore } from "@/stores/user";
 
+const userStore = useUserStore();
 const modal = useTemplateRef("modal");
 const text = ref("");
 const showToast = ref(false);
@@ -23,7 +25,7 @@ async function getMessages(extraParam = "", prepend = false) {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${userStore.token}`,
     },
   };
 
@@ -51,7 +53,7 @@ async function postMessage() {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${userStore.token}`,
     },
     body: JSON.stringify(data),
   };
@@ -79,7 +81,7 @@ async function getNewMessageCount() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${userStore.token}`,
     },
   };
 

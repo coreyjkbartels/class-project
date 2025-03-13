@@ -1,9 +1,11 @@
 <script setup>
 import { ref } from "vue";
+import { useUserStore } from "@/stores/user";
 import UserComponent from "./UserComponent.vue";
 
 const users = ref([]);
 const searchText = ref("");
+const userStore = useUserStore();
 
 async function searchUsers() {
   let url = `https://hap-app-api.azurewebsites.net/users?search=firstName|userName:${searchText.value}`;
@@ -11,7 +13,7 @@ async function searchUsers() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${userStore.token}`,
     },
   };
 
