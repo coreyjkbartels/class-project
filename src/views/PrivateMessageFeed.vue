@@ -8,7 +8,6 @@ const props = defineProps({
   userId: String,
 });
 
-const userStore = useUserStore();
 const modal = useTemplateRef("modal");
 const text = ref("");
 const showToast = ref(false);
@@ -101,7 +100,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="paneTitle">Message Feed</div>
+  <h2 class="column__title">Message Feed</h2>
   <div class="scrollWrapper">
     <div class="messages scrollContent">
       <div
@@ -188,10 +187,6 @@ form {
 .buttons {
   display: flex;
   justify-content: space-between;
-}
-
-h2 {
-  font-size: 1.8rem;
 }
 
 .postMessage {

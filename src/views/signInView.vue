@@ -3,14 +3,12 @@ import HeaderComponent from "@/components/HeaderComponent.vue";
 import CardComponent from "@/components/CardComponent.vue";
 import { fetchResponse } from "@/assets/fetch";
 import { useRouter } from "vue-router";
-import { useUserStore } from "@/stores/user";
 import { ref } from "vue";
 
 const router = useRouter();
 const isShown = ref(false);
 const email = ref("");
 const password = ref("");
-const userStore = useUserStore();
 
 async function signIn(e) {
   e.preventDefault();
@@ -24,7 +22,7 @@ async function signIn(e) {
 
   if (response.status === 200) {
     const data = await response.json();
-    userStore.setUser(data.user.userName, data.token);
+    saveInfo(data);
 
     router.push({
       name: "main",

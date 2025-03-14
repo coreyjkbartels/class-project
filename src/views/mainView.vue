@@ -8,14 +8,17 @@ import NavBarComponent from "@/components/NavBarComponent.vue";
 
 const error = ref("");
 const isShown = ref(false);
-const userStore = useUserStore();
-const { userName } = storeToRefs(userStore);
+const userName = ref(localStorage.getItem("userName"));
+
+function capitalize(word) {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
 
 async function signOut() {
   const response = await fetchResponse("/user/logout", "POST");
 
   if (response.status === 200) {
-    userStore.$reset();
+    localStorage.clear;
     router.push({ name: "home" });
   } else {
     error.value = "An error occurred while logging out.";
@@ -28,7 +31,7 @@ async function deleteAccount() {
   const response = await fetchResponse("/user", "DELETE");
 
   if (response.status === 200) {
-    userStore.$reset();
+    localStorage.clear;
     router.push({ name: "home" });
   } else {
     error.value = "Could not delete your account";
@@ -44,7 +47,7 @@ function displayProfile() {
 <template>
   <HeaderComponent>
     <nav>
-      <h3>Welcome {{ userName }}</h3>
+      <h1>Welcome {{ capitalize(userName) }}</h1>
 
       <div class="dropdown">
         <a class="dropdownBtn"
@@ -66,14 +69,14 @@ function displayProfile() {
 
     <div class="columns">
       <div class="wrapper">
-        <div class="column end-column">
+        <div class="column">
           <NavBarComponent></NavBarComponent>
         </div>
-        <div class="column middle-column">
+        <div class="column">
           <RouterView></RouterView>
         </div>
       </div>
-      <div class="column end-column">
+      <div class="column">
         <RouterView name="right"></RouterView>
       </div>
     </div>
@@ -84,10 +87,11 @@ function displayProfile() {
 .dropdown .links {
   display: none;
   position: absolute;
+  top: 105px;
   right: 100px;
   z-index: 1;
 
-  width: 200px;
+  width: 225px;
   border-radius: 7px;
   overflow: hidden;
   background-color: hsl(0 0% 95%);
@@ -122,22 +126,6 @@ function displayProfile() {
   z-index: 1;
 }
 
-.columns {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-
-  padding: 0px;
-  height: 500px;
-}
-
-.end-column {
-  padding: 8%;
-}
-
-.middle-column {
-  padding: 4%;
-}
-
 .wrapper {
   display: contents;
 }
@@ -148,9 +136,5 @@ function displayProfile() {
 nav {
   display: flex;
   align-items: center;
-}
-
-nav h3 {
-  font-size: 1.3rem;
 }
 </style>

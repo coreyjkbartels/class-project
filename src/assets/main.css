@@ -22,7 +22,14 @@
 
 	color: var(--fontColor);
 	font-family: "Roboto", Arial, Helvetica, sans-serif;
-	font-size: 1.1rem;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+img {
+	width: 100%;
 }
 
 nav {
@@ -64,7 +71,6 @@ a {
 	text-decoration: none;
 	color: var(--darkGray);
 
-	padding: 5px;
 	cursor: pointer;
 }
 
@@ -86,11 +92,6 @@ a:hover {
 	color: var(--accent);
 }
 
-h3 {
-	font-size: 2rem;
-	text-align: center;
-}
-
 input {
 	padding: 5px;
 	border-radius: 5px;
@@ -109,4 +110,35 @@ input {
 section > .container {
 	display: flex;
 	flex-direction: column;
+}
+
+textarea {
+	border: 1px black solid;
+	border-radius: 10px;
+	padding: 20px;
+	margin: auto;
+
+	resize: none;
+}
+
+.columns {
+	display: grid;
+	grid-template-columns: 1fr 2.25fr 2fr;
+
+	height: 500px;
+}
+
+.column {
+	display: flex;
+	flex-direction: column;
+
+	padding: 15px;
+}
+
+.column__title {
+	/* font-size: 1.2rem;	 */
+	margin-bottom: 20px;
+	padding: 0px 10px;
+
+	text-align: center;
 }

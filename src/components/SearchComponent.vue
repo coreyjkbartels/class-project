@@ -1,12 +1,10 @@
 <script setup>
 import { ref } from "vue";
-import { useUserStore } from "@/stores/user";
 import UserComponent from "./UserComponent.vue";
 import { fetchResponse } from "@/assets/fetch";
 
 const users = ref([]);
 const searchText = ref("");
-const userStore = useUserStore();
 
 async function searchUsers() {
   const endpoint = `/users?search=firstName|userName:${searchText.value}`;

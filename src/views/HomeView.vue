@@ -13,9 +13,7 @@ import CardComponent from "@/components/CardComponent.vue";
   </HeaderComponent>
   <main>
     <CardComponent>
-      <h3>Welcome To Dojo</h3>
+      <h1>Welcome To Dojo</h1>
     </CardComponent>
   </main>
 </template>
-
-<style scoped></style>

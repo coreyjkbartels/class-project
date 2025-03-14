@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { useUserStore } from "@/stores/user";
 import HomeView from "@/views/HomeView.vue";
 import JoinView from "@/views/joinView.vue";
 import SignInView from "@/views/signInView.vue";
@@ -8,6 +7,7 @@ import ProfileView from "@/views/ProfileView.vue";
 import WelcomeView from "@/views/WelcomeView.vue";
 import SearchComponent from "@/components/SearchComponent.vue";
 import PrivateMessageFeed from "@/views/PrivateMessageFeed.vue";
+import PostMessageComponent from "@/components/PostMessageComponent.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +45,7 @@ const router = createRouter({
           name: "main",
           components: {
             default: WelcomeView,
+            right: PostMessageComponent,
           },
         },
         {
@@ -79,12 +80,12 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
+  console.log(from);
   if (!router.hasRoute(to.name)) {
     return { name: "home" };
   }
 
-  const userStore = useUserStore();
-  if (to.meta.requiresAuth && !userStore.token) {
+  if (to.meta.requiresAuth && !localStorage.getItem("token")) {
     console.log("NavGuard triggered; Redirecting...");
     return { name: "home" };
   }

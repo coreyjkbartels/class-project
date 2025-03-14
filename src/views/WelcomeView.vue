@@ -1,15 +1,8 @@
 <script setup>
-import ModalComponent from "@/components/ModalComponent.vue";
 import MessageComponent from "@/components/MessageComponent.vue";
 import { fetchResponse } from "@/assets/fetch";
-import { onMounted, ref, useTemplateRef } from "vue";
-import { useUserStore } from "@/stores/user";
+import { onMounted, ref } from "vue";
 
-const userStore = useUserStore();
-const modal = useTemplateRef("modal");
-const text = ref("");
-const showToast = ref(false);
-const toastMessage = ref("");
 const messages = ref([]);
 const newMessageCount = ref(0);
 const isDisabled = ref(true);
@@ -33,31 +26,6 @@ async function getMessages(extraParam = "", prepend = false) {
 }
 
 getMessages();
-
-async function postMessage() {
-  const form = document.querySelector("form");
-  if (!form.reportValidity) return false;
-
-  const endpoint = "/message";
-  const data = {
-    text: text.value,
-  };
-  const response = await fetchResponse(endpoint, "POST", data);
-
-  if (response.status == 201) {
-    text.value = "";
-    toastMessage.value = "Message Posted";
-  } else toastMessage.value = "Failed to Post Message";
-
-  modal.value.close();
-  showToast.value = true;
-  setTimeout(() => (showToast.value = false), 2000);
-}
-
-function cancel(e) {
-  text.value = "";
-  modal.value.close(e);
-}
 
 async function getNewMessageCount() {
   const endpoint = `/messages/count?after=${messages.value[0].updatedAt}`;
@@ -96,8 +64,8 @@ onMounted(() => {
 
 <template>
   <section>
-    <div class="container">
-      <div class="paneTitle">Message Feed</div>
+    <div class="column">
+      <h2 class="column__title">Message Feed</h2>
       <div class="scrollWrapper">
         <div class="messages scrollContent">
           <div
@@ -121,87 +89,14 @@ onMounted(() => {
       </div>
     </div>
   </section>
-
-  <div v-show="showToast" class="toast">{{ toastMessage }}</div>
-
-  <button class="postMessage" @click="modal.open">Post Message</button>
-
-  <ModalComponent ref="modal">
-    <template #header>
-      <h2>Post Message</h2>
-    </template>
-    <template #main>
-      <form onsubmit="return false">
-        <textarea
-          name="textarea"
-          id="text"
-          v-model="text"
-          required
-          maxlength="280"
-          :style="{
-            width: '500px',
-            height: '250px',
-          }"
-        ></textarea>
-      </form>
-    </template>
-    <template #footer>
-      <div class="buttons">
-        <button class="cancel" @click="cancel">Cancel</button>
-        <button class="save" @click="postMessage">Post</button>
-      </div>
-    </template>
-  </ModalComponent>
 </template>
 
 <style scoped>
-form {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  margin: 50px;
-}
-
-.toast {
-  position: fixed;
-  top: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-
-  width: fit-content;
-  margin: auto;
-
-  padding: 0.25em 1.5em;
-  background-color: hsl(0 0% 95%);
-
-  border-radius: 7px;
+.scrollWrapper {
+  margin-top: 10px;
 }
 
 .messages {
   height: 360px;
-}
-
-.buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-h2 {
-  font-size: 1.8rem;
-}
-
-.postMessage {
-  display: block;
-  width: fit-content;
-  margin: 0px auto;
-  margin-top: 20px;
-}
-
-textarea {
-  padding: 20px;
-  border-radius: 10px;
-  resize: none;
 }
 </style>

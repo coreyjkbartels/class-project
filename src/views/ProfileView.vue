@@ -1,11 +1,9 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import { ref, useTemplateRef } from "vue";
-import { useUserStore } from "@/stores/user";
 import ModalComponent from "@/components/ModalComponent.vue";
 import { fetchResponse } from "@/assets/fetch";
 
-const userStore = useUserStore();
 const modal = useTemplateRef("modal");
 const showToast = ref(false);
 const message = ref("");
@@ -59,11 +57,7 @@ async function save() {
     console.log("Success");
     message.value = "Success";
     getInfo();
-    userStore.$patch((state) => {
-      state.userName = userName.value;
-    });
-    // userStore.setUser(userName.value, userStore.token);
-    // localStorage.setItem("userName", userName.value);
+    localStorage.setItem("userName", userName.value);
   } else {
     console.log(response.status);
     message.value = "Failed";
@@ -83,33 +77,37 @@ function cancel(e) {
 </script>
 
 <template>
-  <main>
-    <div class="title">
-      <RouterLink to="main"
-        ><span class="material-symbols-outlined"> arrow_back </span></RouterLink
-      >
-      <div>Profile</div>
+  <section>
+    <div class="column">
+      <div class="column__titleBlock">
+        <RouterLink to="main"
+          ><span class="material-symbols-outlined">
+            arrow_back
+          </span></RouterLink
+        >
+        <h2 class="column__title">Profile</h2>
+      </div>
+      <div class="infoGrid">
+        <div class="infoField">
+          <div>First Name</div>
+          {{ firstName }}
+        </div>
+        <div class="infoField">
+          <div>Last Name</div>
+          {{ lastName }}
+        </div>
+        <div class="infoField username">
+          <div>Username</div>
+          {{ userName }}
+        </div>
+        <div class="infoField email">
+          <div>Email</div>
+          {{ email }}
+        </div>
+        <button id="edit" @click="modal.open">Edit</button>
+      </div>
     </div>
-    <div class="infoGrid">
-      <div class="infoField">
-        <div>First Name</div>
-        {{ firstName }}
-      </div>
-      <div class="infoField">
-        <div>Last Name</div>
-        {{ lastName }}
-      </div>
-      <div class="infoField username">
-        <div>Username</div>
-        {{ userName }}
-      </div>
-      <div class="infoField email">
-        <div>Email</div>
-        {{ email }}
-      </div>
-      <button id="edit" @click="modal.open">Edit</button>
-    </div>
-  </main>
+  </section>
 
   <span v-show="showToast" class="toast">{{ message }}</span>
 
@@ -193,6 +191,7 @@ function cancel(e) {
 .infoGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
 }
 
 .infoField {
@@ -200,7 +199,6 @@ function cancel(e) {
   border-radius: 5px;
   padding: 5px;
   height: 50px;
-  margin: 10px;
 }
 
 .infoField div {
@@ -212,20 +210,14 @@ function cancel(e) {
   grid-column: span 2;
 }
 
-.title {
+.column__titleBlock {
   display: flex;
-  align-items: center;
-
-  font-size: 48px;
+  align-items: start;
 }
 
 #edit {
   grid-column: 2 / 3;
   justify-self: end;
-}
-
-h1 {
-  font-size: 1.5rem;
 }
 
 .buttons {

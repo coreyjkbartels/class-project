@@ -1,32 +1,27 @@
 <template>
-  <div class="container">
-    <div class="logo">
+  <div class="logo">
+    <div class="logo__image">
       <img src="../../public/icon.png" alt="Ninja Icon" />
     </div>
-    <h1>Dojo</h1>
+    <h1 class="logo__text">Dojo</h1>
   </div>
 </template>
 
 <style>
-.container {
+.logo {
   display: flex;
   gap: 20px;
   align-items: center;
 }
 
-.logo {
+.logo__image {
   width: 75px;
   height: 75px;
 }
 
-.logo img {
-  width: 100%;
-}
-
-h1 {
-  color: #ff3b38;
-  font-size: 3.5rem;
-
+.logo__text {
+  color: var(--accent);
+  font-size: 4rem;
   font-family: "Kolker Brush", Georgia, "Times New Roman", Times, serif;
 }
 </style>
