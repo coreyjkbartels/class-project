@@ -3,6 +3,7 @@ import { RouterLink } from "vue-router";
 import { ref, useTemplateRef } from "vue";
 import { useUserStore } from "@/stores/user";
 import ModalComponent from "@/components/ModalComponent.vue";
+import { fetchResponse } from "@/assets/fetch";
 
 const userStore = useUserStore();
 const modal = useTemplateRef("modal");
@@ -21,7 +22,7 @@ const newEmail = ref("");
 const password = ref("");
 
 async function getInfo() {
-  const response = await getResponse("user", "GET");
+  const response = await fetchResponse("/user", "GET");
 
   if (response.status === 200) {
     const data = await response.json();
@@ -53,7 +54,7 @@ async function save() {
     password: password.value,
   };
 
-  const response = await getResponse("user", "PATCH", data);
+  const response = await fetchResponse("/user", "PATCH", data);
   if (response.status == 200) {
     console.log("Success");
     message.value = "Success";
@@ -78,21 +79,6 @@ function cancel(e) {
   newLastName.value = lastName.value;
   newUserName.value = userName.value;
   modal.value.close(e);
-}
-
-async function getResponse(endpoint, methodParam, data) {
-  const url = "https://hap-app-api.azurewebsites.net/" + endpoint;
-
-  const options = {
-    method: methodParam,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userStore.token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
-  return await fetch(url, options);
 }
 </script>
 

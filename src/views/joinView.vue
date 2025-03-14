@@ -1,6 +1,7 @@
 <script setup>
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import CardComponent from "@/components/CardComponent.vue";
+import { fetchResponse } from "@/assets/fetch.js";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { ref } from "vue";
@@ -20,7 +21,14 @@ async function join(e) {
   e.preventDefault();
   if (!isValid()) return false;
 
-  let response = await getResponse();
+  const data = {
+    email: email.value,
+    userName: userName.value,
+    password: password.value,
+    firstName: firstName.value,
+    lastName: lastName.value,
+  };
+  let response = await fetchResponse("/user", "POST", data);
 
   if (response.status === 201) {
     const data = await response.json();
@@ -51,26 +59,9 @@ function passwordsMatch() {
   }
 }
 
-async function getResponse() {
-  const data = {
-    email: email.value,
-    userName: userName.value,
-    password: password.value,
-    firstName: firstName.value,
-    lastName: lastName.value,
-  };
-
-  const url = "https://hap-app-api.azurewebsites.net/user";
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-
-  return await fetch(url, options);
+function saveInfo(data) {
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("userName", data.user.userName);
 }
 </script>
 

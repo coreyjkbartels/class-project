@@ -1,6 +1,7 @@
 <script setup>
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import CardComponent from "@/components/CardComponent.vue";
+import { fetchResponse } from "@/assets/fetch";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { ref } from "vue";
@@ -15,7 +16,11 @@ async function signIn(e) {
   e.preventDefault();
   if (!isValid()) return;
 
-  const response = await getResponse();
+  const data = {
+    email: email.value,
+    password: password.value,
+  };
+  const response = await fetchResponse("/user/login", "POST", data);
 
   if (response.status === 200) {
     const data = await response.json();
@@ -34,23 +39,9 @@ function isValid() {
   return form.reportValidity();
 }
 
-async function getResponse() {
-  const data = {
-    email: email.value,
-    password: password.value,
-  };
-
-  const url = "https://hap-app-api.azurewebsites.net/user/login";
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-
-  return await fetch(url, options);
+function saveInfo(data) {
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("userName", data.user.userName);
 }
 </script>
 

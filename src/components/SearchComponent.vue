@@ -2,22 +2,16 @@
 import { ref } from "vue";
 import { useUserStore } from "@/stores/user";
 import UserComponent from "./UserComponent.vue";
+import { fetchResponse } from "@/assets/fetch";
 
 const users = ref([]);
 const searchText = ref("");
 const userStore = useUserStore();
 
 async function searchUsers() {
-  let url = `https://hap-app-api.azurewebsites.net/users?search=firstName|userName:${searchText.value}`;
-  const options = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userStore.token}`,
-    },
-  };
+  const endpoint = `/users?search=firstName|userName:${searchText.value}`;
+  const response = await fetchResponse(endpoint, "GET");
 
-  const response = await fetch(url, options);
   if (response.status == 200) {
     console.log("Get Users Successful");
     const data = await response.json();
@@ -31,7 +25,7 @@ async function searchUsers() {
 <template>
   <section>
     <div class="container">
-      <div class="paneTitle">Search Users</div>
+      <div class="paneTitle">Users</div>
       <form onsubmit="return false" class="search">
         <input
           type="text"
@@ -40,9 +34,7 @@ async function searchUsers() {
           v-model="searchText"
           required
         />
-        <span class="material-symbols-outlined" @click="searchUsers">
-          search
-        </span>
+        <button @click="searchUsers">search</button>
       </form>
       <div class="scrollWrapper">
         <div class="topMessage">Showing {{ users.length }} user(s)</div>
@@ -61,9 +53,9 @@ async function searchUsers() {
 <style scoped>
 form.search {
   padding: 0px 10px;
-
+  /*
   display: flex;
-  flex-direction: row;
+  flex-direction: row; */
 }
 
 .users {

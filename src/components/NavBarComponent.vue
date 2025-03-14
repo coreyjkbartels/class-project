@@ -6,6 +6,7 @@ import { RouterLink } from "vue-router";
   <div class="bar">
     <div class="paneTitle">Navigation</div>
     <RouterLink to="main">Home</RouterLink>
+    <RouterLink to="search">Messages</RouterLink>
     <RouterLink to="profile">Profile</RouterLink>
   </div>
 </template>

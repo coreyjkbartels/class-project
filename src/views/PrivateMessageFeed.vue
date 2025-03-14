@@ -1,8 +1,8 @@
 <script setup>
+import { onMounted, ref, useTemplateRef } from "vue";
+import { fetchResponse } from "@/assets/fetch";
 import ModalComponent from "@/components/ModalComponent.vue";
 import MessageComponent from "@/components/MessageComponent.vue";
-import { onMounted, ref, useTemplateRef } from "vue";
-import { useUserStore } from "@/stores/user";
 
 const props = defineProps({
   userId: String,
@@ -24,16 +24,9 @@ const formatDate = (dateString) => {
 };
 
 async function getMessages(queryParams, prepend = false) {
-  const url = `https://hap-app-api.azurewebsites.net/messages/${props.userId}?${queryParams}`;
-  const options = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userStore.token}`,
-    },
-  };
+  const endpoint = `/messages/${props.userId}?${queryParams}`;
+  const response = await fetchResponse(endpoint, "GET");
 
-  const response = await fetch(url, options);
   if (response.status == 200) {
     console.log("Succeeded in fetching messages");
     const data = await response.json();
@@ -49,21 +42,11 @@ async function postMessage() {
   const form = document.querySelector("form");
   if (!form.reportValidity) return false;
 
-  const url = `https://hap-app-api.azurewebsites.net/message/${props.userId}`;
+  const endpoint = `/message/${props.userId}`;
   const data = {
     text: text.value,
   };
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userStore.token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
-  const response = await fetch(url, options);
+  const response = await fetchResponse(endpoint, "POST-", data);
 
   if (response.status == 201) {
     text.value = "";
@@ -81,16 +64,9 @@ function cancel(e) {
 }
 
 async function getMessageCount() {
-  const url = `https://hap-app-api.azurewebsites.net/messages/${props.userId}/count?after=${messages.value[0].updatedAt}`;
-  const options = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userStore.token}`,
-    },
-  };
+  const endpoint = `/messages/${props.userId}/count?after=${messages.value[0].updatedAt}`;
+  const response = await fetchResponse(endpoint, "GET");
 
-  const response = await fetch(url, options);
   if (response.status == 200) {
     console.log("Succeed in getting new message count");
     const data = await response.json();

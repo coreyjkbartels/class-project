@@ -17,10 +17,10 @@
 
 .topMessage {
 	background-color: var(--lightGray);
-	text-align: center;
-
-	cursor: pointer;
 	padding: 5px;
+
+	text-align: center;
+	cursor: pointer;
 }
 
 .topMessage:hover {

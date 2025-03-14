@@ -45,7 +45,6 @@ const router = createRouter({
           name: "main",
           components: {
             default: WelcomeView,
-            right: SearchComponent,
           },
         },
         {
@@ -56,11 +55,18 @@ const router = createRouter({
           },
         },
         {
+          path: "/search",
+          name: "search",
+          components: {
+            default: SearchComponent,
+          },
+        },
+        {
           path: "/user/:userId",
           name: "privateMessage",
           components: {
-            default: PrivateMessageFeed,
-            right: SearchComponent,
+            default: SearchComponent,
+            right: PrivateMessageFeed,
           },
           props: true,
         },

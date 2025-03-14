@@ -1,6 +1,7 @@
 <script setup>
 import ModalComponent from "@/components/ModalComponent.vue";
 import MessageComponent from "@/components/MessageComponent.vue";
+import { fetchResponse } from "@/assets/fetch";
 import { onMounted, ref, useTemplateRef } from "vue";
 import { useUserStore } from "@/stores/user";
 
@@ -20,16 +21,9 @@ const formatDate = (dateString) => {
 };
 
 async function getMessages(extraParam = "", prepend = false) {
-  const url = `https://hap-app-api.azurewebsites.net/messages?limit=15${extraParam}`;
-  const options = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userStore.token}`,
-    },
-  };
+  const endpoint = `/messages?limit=15${extraParam}`;
+  const response = await fetchResponse(endpoint, "GET");
 
-  const response = await fetch(url, options);
   if (response.status == 200) {
     const data = await response.json();
     prepend ? messages.value.unshift(...data) : messages.value.push(...data);
@@ -44,21 +38,11 @@ async function postMessage() {
   const form = document.querySelector("form");
   if (!form.reportValidity) return false;
 
-  const url = "https://hap-app-api.azurewebsites.net/message";
+  const endpoint = "/message";
   const data = {
     text: text.value,
   };
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userStore.token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
-  const response = await fetch(url, options);
+  const response = await fetchResponse(endpoint, "POST", data);
 
   if (response.status == 201) {
     text.value = "";
@@ -76,16 +60,9 @@ function cancel(e) {
 }
 
 async function getNewMessageCount() {
-  const url = `https://hap-app-api.azurewebsites.net/messages/count?after=${messages.value[0].updatedAt}`;
-  const options = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userStore.token}`,
-    },
-  };
+  const endpoint = `/messages/count?after=${messages.value[0].updatedAt}`;
+  const response = await fetchResponse(endpoint, "GET");
 
-  const response = await fetch(url, options);
   if (response.status == 200) {
     const data = await response.json();
     newMessageCount.value = data.total;

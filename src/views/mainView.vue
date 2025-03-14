@@ -1,11 +1,10 @@
 <script setup>
+import { ref } from "vue";
+import router from "@/router";
+import { RouterView } from "vue-router";
+import { fetchResponse } from "@/assets/fetch";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import NavBarComponent from "@/components/NavBarComponent.vue";
-import { RouterView } from "vue-router";
-import { useUserStore } from "@/stores/user";
-import router from "@/router";
-import { ref } from "vue";
-import { storeToRefs } from "pinia";
 
 const error = ref("");
 const isShown = ref(false);
@@ -13,7 +12,7 @@ const userStore = useUserStore();
 const { userName } = storeToRefs(userStore);
 
 async function signOut() {
-  const response = await getResponse("user/logout", "POST");
+  const response = await fetchResponse("/user/logout", "POST");
 
   if (response.status === 200) {
     userStore.$reset();
@@ -26,7 +25,7 @@ async function signOut() {
 
 async function deleteAccount() {
   if (!confirm("Do you really want to delete your account?")) return;
-  const response = await getResponse("user", "DELETE");
+  const response = await fetchResponse("/user", "DELETE");
 
   if (response.status === 200) {
     userStore.$reset();
@@ -35,20 +34,6 @@ async function deleteAccount() {
     error.value = "Could not delete your account";
     isShown.value = true;
   }
-}
-
-async function getResponse(endpoint, methodParam) {
-  const url = "https://hap-app-api.azurewebsites.net/" + endpoint;
-
-  const options = {
-    method: methodParam,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userStore.token}`,
-    },
-  };
-
-  return await fetch(url, options);
 }
 
 function displayProfile() {
