@@ -64,7 +64,7 @@ form {
 }
 
 .users {
-  max-height: 300px;
+  max-height: 325px;
   padding: 0px 10px;
 }
 </style>
