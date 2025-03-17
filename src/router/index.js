@@ -6,8 +6,8 @@ import MainView from "@/views/mainView.vue";
 import ProfileView from "@/views/ProfileView.vue";
 import WelcomeView from "@/views/WelcomeView.vue";
 import SearchComponent from "@/components/SearchComponent.vue";
-import PrivateMessageFeed from "@/views/PrivateMessageFeed.vue";
 import PostMessageComponent from "@/components/PostMessageComponent.vue";
+import PrivateMessageFeed from "@/components/PrivateMessageFeed.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
