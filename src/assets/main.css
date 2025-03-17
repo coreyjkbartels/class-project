@@ -35,6 +35,7 @@ img {
 nav {
 	display: flex;
 	gap: 20px;
+	align-items: center;
 }
 
 form {
@@ -96,15 +97,10 @@ input {
 	padding: 5px;
 	border-radius: 5px;
 	border: 0.5px solid rgba(0, 0, 0, 0.54);
-	background-color: hsl(0 0% 95%);
 }
 
 .errorBox {
 	color: var(--accent);
-}
-
-.paneTitle {
-	padding: 10px;
 }
 
 section > .container {
@@ -131,14 +127,24 @@ textarea {
 .column {
 	display: flex;
 	flex-direction: column;
+	width: 80%;
+	height: 100%;
+	margin: auto;
 
 	padding: 15px;
 }
 
 .column__title {
-	/* font-size: 1.2rem;	 */
 	margin-bottom: 20px;
 	padding: 0px 10px;
 
 	text-align: center;
+}
+
+.longButton {
+	width: 80%;
+}
+
+section {
+	height: 100%;
 }

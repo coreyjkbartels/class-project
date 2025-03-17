@@ -1,5 +1,4 @@
 <script setup>
-import { RouterLink } from "vue-router";
 import { ref, useTemplateRef } from "vue";
 import ModalComponent from "@/components/ModalComponent.vue";
 import { fetchResponse } from "@/assets/fetch";
@@ -79,14 +78,7 @@ function cancel(e) {
 <template>
   <section>
     <div class="column">
-      <div class="column__titleBlock">
-        <RouterLink to="main"
-          ><span class="material-symbols-outlined">
-            arrow_back
-          </span></RouterLink
-        >
-        <h2 class="column__title">Profile</h2>
-      </div>
+      <h2 class="column__title">Profile</h2>
       <div class="infoGrid">
         <div class="infoField">
           <div>First Name</div>
@@ -104,7 +96,7 @@ function cancel(e) {
           <div>Email</div>
           {{ email }}
         </div>
-        <button id="edit" @click="modal.open">Edit</button>
+        <button class="longButton" @click="modal.open">Edit</button>
       </div>
     </div>
   </section>
@@ -206,27 +198,18 @@ function cancel(e) {
 }
 
 .username,
-.email {
+.email,
+.infoGrid > button {
   grid-column: span 2;
 }
 
-.column__titleBlock {
-  display: flex;
-  align-items: start;
-}
-
-#edit {
-  grid-column: 2 / 3;
-  justify-self: end;
+.longButton {
+  width: 60%;
 }
 
 .buttons {
   display: flex;
   justify-content: space-between;
-}
-
-button {
-  width: 100px;
 }
 
 .toast {

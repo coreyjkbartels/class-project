@@ -22,19 +22,22 @@ async function searchUsers() {
 
 <template>
   <section>
-    <div class="container">
-      <div class="paneTitle">Users</div>
+    <div class="column">
+      <h2 class="column__title">Search Users</h2>
       <form onsubmit="return false" class="search">
         <input
           type="text"
           name="search"
           id="search"
           v-model="searchText"
+          placeholder="Search for a user"
           required
         />
-        <button @click="searchUsers">search</button>
+        <span class="material-symbols-outlined" @click="searchUsers">
+          search
+        </span>
       </form>
-      <div class="scrollWrapper">
+      <div class="scrollWrapper" v-show="users.length > 0">
         <div class="topMessage">Showing {{ users.length }} user(s)</div>
         <div class="users scrollContent">
           <UserComponent
@@ -49,19 +52,19 @@ async function searchUsers() {
 </template>
 
 <style scoped>
-form.search {
-  padding: 0px 10px;
-  /*
+form {
   display: flex;
-  flex-direction: row; */
+  flex-direction: row;
+
+  margin: 10px 0px;
+}
+
+#search {
+  flex: 1;
 }
 
 .users {
   max-height: 300px;
   padding: 0px 10px;
-}
-
-section > .container {
-  max-height: 424.8px;
 }
 </style>

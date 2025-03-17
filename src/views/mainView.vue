@@ -40,7 +40,7 @@ async function deleteAccount() {
 }
 
 function displayProfile() {
-  router.push("profile");
+  router.push({ name: "profile" });
 }
 </script>
 
@@ -69,14 +69,14 @@ function displayProfile() {
 
     <div class="columns">
       <div class="wrapper">
-        <div class="column">
+        <div>
           <NavBarComponent></NavBarComponent>
         </div>
-        <div class="column">
+        <div>
           <RouterView></RouterView>
         </div>
       </div>
-      <div class="column">
+      <div>
         <RouterView name="right"></RouterView>
       </div>
     </div>
@@ -87,7 +87,6 @@ function displayProfile() {
 .dropdown .links {
   display: none;
   position: absolute;
-  top: 105px;
   right: 100px;
   z-index: 1;
 
@@ -129,12 +128,7 @@ function displayProfile() {
 .wrapper {
   display: contents;
 }
-.wrapper > .column {
+.wrapper > div {
   border-right: 1px black solid;
-}
-
-nav {
-  display: flex;
-  align-items: center;
 }
 </style>

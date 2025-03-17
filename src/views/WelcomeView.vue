@@ -97,6 +97,6 @@ onMounted(() => {
 }
 
 .messages {
-  height: 360px;
+  height: 370px;
 }
 </style>

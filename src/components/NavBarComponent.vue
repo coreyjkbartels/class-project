@@ -5,9 +5,9 @@ import { RouterLink } from "vue-router";
 <template>
   <div class="column column--leftAligned">
     <h2 class="column__title">Navigation</h2>
-    <RouterLink to="main">Home</RouterLink>
-    <RouterLink to="search">Messages</RouterLink>
-    <RouterLink to="profile">Profile</RouterLink>
+    <RouterLink :to="{ name: 'main' }">Home</RouterLink>
+    <RouterLink :to="{ name: 'search' }">Messages</RouterLink>
+    <RouterLink :to="{ name: 'profile' }">Profile</RouterLink>
   </div>
 </template>
 

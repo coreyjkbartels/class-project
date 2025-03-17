@@ -100,33 +100,34 @@ onMounted(() => {
 </script>
 
 <template>
-  prvr df
-  <h2 class="column__title">Message Feed</h2>
-  <div class="scrollWrapper">
-    <div class="messages scrollContent">
-      <div
-        class="newMessageCount topMessage"
-        :class="{ disabled: isDisabled }"
-        @click="updateWithNew"
-      >
-        {{
-          newMessageCount == 0
-            ? "No New Messages"
-            : newMessageCount + " new messages"
-        }}
+  <section>
+    <div class="column">
+      <h2 class="column__title">Chat</h2>
+      <div class="scrollWrapper">
+        <div class="messages scrollContent">
+          <div
+            class="newMessageCount topMessage"
+            :class="{ disabled: isDisabled }"
+            @click="updateWithNew"
+          >
+            {{
+              newMessageCount == 0
+                ? "No New Messages"
+                : newMessageCount + " new messages"
+            }}
+          </div>
+          <MessageComponent
+            v-for="message in messages"
+            v-bind="message"
+            :updated-at="formatDate(message.updatedAt)"
+            :key="message.id"
+          ></MessageComponent>
+        </div>
       </div>
-      <MessageComponent
-        v-for="message in messages"
-        v-bind="message"
-        :updated-at="formatDate(message.updatedAt)"
-        :key="message.id"
-      ></MessageComponent>
+      <div v-show="showToast" class="toast">{{ toastMessage }}</div>
+      <button class="postMessage" @click="modal.open">Post Message</button>
     </div>
-  </div>
-
-  <div v-show="showToast" class="toast">{{ toastMessage }}</div>
-
-  <button class="postMessage" @click="modal.open">Post Message</button>
+  </section>
 
   <ModalComponent ref="modal">
     <template #header>
@@ -181,6 +182,10 @@ form {
   border-radius: 7px;
 }
 
+.scrollWrapper {
+  margin: 10px auto;
+}
+
 .messages {
   height: 360px;
 }
@@ -195,11 +200,5 @@ form {
   width: fit-content;
   margin: 0px auto;
   margin-top: 20px;
-}
-
-textarea {
-  padding: 20px;
-  border-radius: 10px;
-  resize: none;
 }
 </style>

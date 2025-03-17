@@ -1,9 +1,11 @@
 .scrollWrapper {
+	flex: 1 0 auto;
+
 	border-radius: 10px;
 	border: 1px solid black;
 	overflow: hidden;
 
-	width: 80%;
+	width: 100%;
 	margin: auto;
 }
 
@@ -17,6 +19,7 @@
 
 .topMessage {
 	background-color: var(--lightGray);
+	border-bottom: 1px solid black;
 	padding: 5px;
 
 	text-align: center;

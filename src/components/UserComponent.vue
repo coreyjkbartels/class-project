@@ -22,9 +22,9 @@ defineProps({
 
 <style scoped>
 .wrapper {
-  width: 100%;
-
+  width: 80%;
   border-radius: 10px;
+  border: 1px black solid;
   overflow: hidden;
 }
 
@@ -33,13 +33,13 @@ defineProps({
   border-radius: 10px;
   overflow-y: auto;
 
-  margin: 0px auto;
+  margin: 10px auto;
 
   position: relative;
 }
 
 .userCard:hover {
-  border: 1px ;
+  border: 1px;
 }
 
 a:hover {

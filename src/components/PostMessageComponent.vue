@@ -34,20 +34,20 @@ async function postMessage() {
           required
           maxlength="280"
         ></textarea>
-        <button @click="postMessage">Post</button>
+        <button class="longButton" @click="postMessage">Post</button>
       </form>
     </div>
   </section>
 </template>
 
 <style scoped>
-textarea {
-  margin-top: 10px;
-  width: 80%;
-  height: 300.2px;
+form {
+  flex: 1;
 }
 
-button {
-  width: 80%;
+textarea {
+  margin-top: 10px;
+  width: 100%;
+  height: 100%;
 }
 </style>
