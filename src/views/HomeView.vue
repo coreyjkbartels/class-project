@@ -1,7 +1,6 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import HeaderComponent from "@/components/HeaderComponent.vue";
-import CardComponent from "@/components/CardComponent.vue";
 </script>
 
 <template>
@@ -12,8 +11,16 @@ import CardComponent from "@/components/CardComponent.vue";
     </nav>
   </HeaderComponent>
   <main>
-    <CardComponent>
-      <h1>Welcome To Dojo</h1>
-    </CardComponent>
+    <section>
+      <div class="column">
+        <h1>Welcome To Dojo</h1>
+      </div>
+    </section>
   </main>
 </template>
+
+<style scoped>
+h1 {
+  text-align: center;
+}
+</style>

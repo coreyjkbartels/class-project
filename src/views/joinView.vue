@@ -1,6 +1,5 @@
 <script setup>
 import HeaderComponent from "@/components/HeaderComponent.vue";
-import CardComponent from "@/components/CardComponent.vue";
 import { fetchResponse } from "@/assets/fetch.js";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
@@ -70,8 +69,8 @@ function saveInfo(data) {
     </nav>
   </HeaderComponent>
 
-  <main>
-    <CardComponent>
+  <section>
+    <div class="column column--width15">
       <form class="mainForm" onsubmit="return false">
         <li class="inputGroup">
           <label for="firstName">First Name</label>
@@ -136,8 +135,8 @@ function saveInfo(data) {
           />
         </li>
         <div class="errorBox" v-if="isShown">Something went wrong...</div>
-        <button @click="join">Join</button>
+        <button class="longButton" @click="join">Join</button>
       </form>
-    </CardComponent>
-  </main>
+    </div>
+  </section>
 </template>

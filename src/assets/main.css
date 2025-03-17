@@ -25,7 +25,7 @@
 }
 
 h1 {
-	font-size: 2em;
+	font-size: 1.75em;
 }
 
 img {
@@ -54,6 +54,7 @@ li.inputGroup {
 button {
 	border: 0.7px solid var(--darkGray);
 	background-color: var(--accent);
+	color: white;
 	border-radius: 5px;
 
 	width: fit-content;
@@ -63,7 +64,11 @@ button {
 }
 
 button:hover {
-	transform: scale(1.07);
+	transform: scale(1.05);
+}
+
+.longButton {
+	width: 95%;
 }
 
 a {
@@ -134,15 +139,15 @@ textarea {
 	padding: 15px;
 }
 
+.column--width15 {
+	width: 15%;
+}
+
 .column__title {
 	margin-bottom: 20px;
 	padding: 0px 10px;
 
 	text-align: center;
-}
-
-.longButton {
-	width: 80%;
 }
 
 section {

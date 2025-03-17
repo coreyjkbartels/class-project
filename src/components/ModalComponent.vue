@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import CardComponent from "./CardComponent.vue";
 
 const isShown = ref(false);
 
@@ -20,13 +19,15 @@ function close() {
 
 <template>
   <div class="modal-backdrop" v-show="isShown" @click.self="close">
-    <CardComponent>
-      <header>
-        <slot name="header"></slot>
-      </header>
-      <main><slot name="main"></slot></main>
-      <footer><slot name="footer"></slot></footer>
-    </CardComponent>
+    <section>
+      <div class="column">
+        <header>
+          <slot name="header"></slot>
+        </header>
+        <main><slot name="main"></slot></main>
+        <footer><slot name="footer"></slot></footer>
+      </div>
+    </section>
   </div>
 </template>
 

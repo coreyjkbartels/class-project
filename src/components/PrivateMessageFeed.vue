@@ -125,7 +125,7 @@ onMounted(() => {
         </div>
       </div>
       <div v-show="showToast" class="toast">{{ toastMessage }}</div>
-      <button class="postMessage" @click="modal.open">Post Message</button>
+      <button class="longButton" @click="modal.open">Post Message</button>
     </div>
   </section>
 
@@ -193,12 +193,5 @@ form {
 .buttons {
   display: flex;
   justify-content: space-between;
-}
-
-.postMessage {
-  display: block;
-  width: fit-content;
-  margin: 0px auto;
-  margin-top: 20px;
 }
 </style>

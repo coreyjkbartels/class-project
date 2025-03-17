@@ -1,6 +1,5 @@
 <script setup>
 import HeaderComponent from "@/components/HeaderComponent.vue";
-import CardComponent from "@/components/CardComponent.vue";
 import { fetchResponse } from "@/assets/fetch";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
@@ -50,8 +49,8 @@ function saveInfo(data) {
     </nav>
   </HeaderComponent>
 
-  <main>
-    <CardComponent>
+  <section>
+    <div class="column column--width15">
       <form>
         <li class="inputGroup">
           <label for="email">Email</label>
@@ -74,10 +73,11 @@ function saveInfo(data) {
             minlength="8"
           />
         </li>
-
         <div class="errorBox" v-if="isShown">Invalid Username or Password</div>
-        <button type="button" @click="signIn">Sign In</button>
+        <button class="longButton" type="button" @click="signIn">
+          Sign In
+        </button>
       </form>
-    </CardComponent>
-  </main>
+    </div>
+  </section>
 </template>
